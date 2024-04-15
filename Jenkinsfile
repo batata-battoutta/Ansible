@@ -10,7 +10,7 @@ pipeline {
 
         stage('Run Ansible Playbook') {
             agent{
-                docker{
+                docker {
                     image 'ansible/ansible:lts'
                 }
             }
