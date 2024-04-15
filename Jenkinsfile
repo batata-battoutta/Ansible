@@ -9,6 +9,11 @@ pipeline {
         }
 
         stage('Run Ansible Playbook') {
+            agent{
+                docker{
+                    image 'ansible:lts'
+                }
+            }
             steps {
                 script {
                     // Specify the path to your Ansible playbook YAML file
@@ -20,11 +25,7 @@ pipeline {
             }
         }
 
-        stage('Post-build Cleanup') {
-            steps {
-                deleteDir()
-            }
-        }
+        
     }
 
 }
