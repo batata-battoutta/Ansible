@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'ansible/ansible:lts'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'  // Mount Docker socket for Docker inside Docker
+        }
+    }
 
     stages {
         stage('Checkout') {
@@ -9,11 +14,6 @@ pipeline {
         }
 
         stage('Run Ansible Playbook') {
-            agent{
-                docker {
-                    image 'ansible/ansible:lts'
-                }
-            }
             steps {
                 script {
                     // Specify the path to your Ansible playbook YAML file
