@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'ansible/ansible:latest'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'  // Mount Docker socket for Docker inside Docker
-        }
-    }
-
+    agent any
     stages {
         stage('Checkout') {
             steps {
