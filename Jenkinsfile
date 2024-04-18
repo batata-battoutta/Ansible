@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     // Specify the path to your Ansible playbook YAML file
-                    def playbookPath = "docker_start.yml"
+                    def playbookPath = "DeployMyProject.yml"
 
                     // Run the Ansible playbook
                     sh "ansible-playbook $playbookPath"

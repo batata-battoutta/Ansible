@@ -1,0 +1,30 @@
+- name: Deploy Dockerized Laravel Project from GitHub
+  hosts: your_target_server # Replace with the hostname or IP address of your target server
+  become: yes
+  vars:
+    github_repo: "https://github.com/yourusername/yourlaravelproject.git" # GitHub repository URL
+    github_branch: main # GitHub branch to deploy
+    project_dir: "/path/to/yourlaravelproject" # Destination directory on the target server
+    docker_compose_file: "/path/to/docker-compose.yml" # Path to your Docker Compose file
+
+  tasks:
+    - name: Install Git and Docker
+      apt:
+        name:
+          - git
+          - docker.io
+        state: present
+
+    - name: Clone Laravel project from GitHub
+      git:
+        repo: "{{ github_repo }}"
+        dest: "{{ project_dir }}"
+        version: "{{ github_branch }}"
+
+    - name: Change directory to project directory
+      become_user: "{{ ansible_user }}"
+      shell: cd {{ project_dir }}
+
+    - name: Pull Docker images and start containers
+      become_user: "{{ ansible_user }}"
+      shell: docker-compose -f {{ docker_compose_file }} up -d
